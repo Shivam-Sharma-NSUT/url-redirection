@@ -31,7 +31,6 @@ const Login = () => {
         setIsLoading(true);
         try {
             const { data } = await axios.post('/api/login', values);
-            console.log(data);
             if (!data.success) {
                 toast({
                     title: data.message,

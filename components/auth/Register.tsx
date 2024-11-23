@@ -32,7 +32,6 @@ const Register = () => {
         setIsLoading(true);
         try {
             const { data } = await axios.post('/api/signUp', values);
-            console.log(data);
             if (!data.success) {
                 toast({
                     title: data.message,

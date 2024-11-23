@@ -13,7 +13,6 @@ export async function POST(request: Request) {
     if (!validationResult.success) {
         return Response.json({ success: false, message: validationResult.error.issues.reduce((acc, issue) => `${acc}\n${issue.message}`, '') });
     }
-    console.log('validatino success', data);
 
     try {
         const { username, email, password } = data;
@@ -21,10 +20,8 @@ export async function POST(request: Request) {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const { _id: userId }: User = await user.create({ username, email, password: hashedPassword });
-        console.log('entry created');
         
         await createSession(username, email, (userId as string)?.toString());
-        console.log('cookie set');
         return Response.json({ success: true });
     } catch (error) {
         console.log(error);

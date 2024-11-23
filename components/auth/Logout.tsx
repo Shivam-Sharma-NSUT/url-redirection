@@ -10,7 +10,6 @@ const Logout = ({ className }: { className: string }) => {
     const onClick = async () => {
         try {
             const { data } = await axios.post('/api/logout');
-            console.log(data);
             if (!data.success) {
                 throw 'logout failed';
             }

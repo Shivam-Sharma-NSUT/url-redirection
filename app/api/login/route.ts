@@ -7,7 +7,6 @@ import { LoginRequest, loginRequestValidations } from "@/app/schemas";
 
 export async function POST(request: Request) {
     await dbConnect();
-    console.log('login api called');
     
     const data: LoginRequest = await request.json();
     const validationResult = loginRequestValidations.safeParse(data);
@@ -20,7 +19,6 @@ export async function POST(request: Request) {
         const existingUser: User | null | undefined = await user.findOne({ email });
         if (isEmpty(existingUser)) return Response.json({ success: false, message: 'User not found' });
         const compareResult = await bcrypt.compare(password, existingUser.password);
-        console.log(existingUser.password, compareResult);
         if (!compareResult) return Response.json({ success: false, message: 'email or password is wrong' });
         
         await createSession(existingUser.username, existingUser.email, (existingUser._id as string)?.toString());
