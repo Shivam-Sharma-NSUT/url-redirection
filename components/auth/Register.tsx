@@ -11,7 +11,7 @@ import axios from 'axios';
 import { useToast } from '@/hooks/use-toast';
 import Loader from '../Loader';
 import { Eye, EyeClosed } from 'lucide-react';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const Register = () => {
     const [isLoading, setIsLoading] = useState(false);

@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     }
     const { universalLink: shortCode, imageLink, title } = data;
     try {
-        const res = await universalLink.findOneAndUpdate({ shortCode }, { $set: { imageLink, title } }, { new: true });
+        await universalLink.findOneAndUpdate({ shortCode }, { $set: { imageLink, title } }, { new: true });
         return Response.json({ success: true });
     } catch (error) {
         console.log(error);
