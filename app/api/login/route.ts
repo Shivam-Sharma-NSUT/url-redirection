@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     try {
         const { email, password } = data;
         const existingUser: User | null | undefined = await user.findOne({ email });
-        if (isEmpty(existingUser)) return Response.json({ success: false });
+        if (isEmpty(existingUser)) return Response.json({ success: false, message: 'User not found' });
         const compareResult = await bcrypt.compare(password, existingUser.password);
         console.log(existingUser.password, compareResult);
         if (!compareResult) return Response.json({ success: false, message: 'email or password is wrong' });
