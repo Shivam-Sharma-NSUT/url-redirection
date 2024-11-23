@@ -1,4 +1,4 @@
-const HOST_URL = "http:localhost:3000";
+const HOST_URL = process.env.HOST_URL;
 const SHORT_URL_CREATION_RETRY_COUNT = 5;
 const SHORT_URL_LENGTH = 5;
 const LIST_OF_COUNTRIES = [
