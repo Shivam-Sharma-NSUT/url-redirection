@@ -12,7 +12,6 @@ const Page = async ({ params }: { params: Promise<{ universalCode: string }> }) 
         originalLink.find({ universalLink: universalCode }),
         universalLink.findOne({ shortCode: universalCode })
     ])
-    console.log(uLink);
 
     return (
         <div className='my-container'>
