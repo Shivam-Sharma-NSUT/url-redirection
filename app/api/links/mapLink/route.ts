@@ -2,6 +2,7 @@
 import originalLink from '@/app/models/originalLink';
 import universalLink from '@/app/models/universalLink';
 import dbConnect from '@/lib/dbConnect';
+import { headers } from 'next/headers';
 import { z } from 'zod';
 
 interface AppendRequest {
@@ -39,7 +40,8 @@ export async function POST(request: Request) {
         if (!isValidUniversalLink) {
             return Response.json({ success: false, error: 'Invalid Universal Link' });
         }
-        const createdBy = 'shivam Bhai';
+        const headersList = await headers();
+        const createdBy = headersList.get('email');
         const { universalLink: uLink, originalLink: oLink, city, country } = data;
         await originalLink.create({ universalLink: uLink, originalLink: oLink, country, city, createdBy })
 

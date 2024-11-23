@@ -10,19 +10,20 @@ import axios from 'axios';
 import { useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription } from "./ui/alert-dialog";
 import Loader from "./Loader";
+import refresh from "@/app/actions";
 
 const formSchema = z.object({
     title: z.string({ invalid_type_error: 'title must be a string' }).min(1, 'title must not be empty string'),
     imageLink: z.string({ invalid_type_error: 'imageLink must be a string' }).min(1, 'imageLink must not be empty string')
 });
 
-interface UpdateImageLinkProps {
+interface UpdateUniversalLinkProps {
     title: string;
     imageLink: string;
     shortCode: string;
 }
 
-const UpdateImageLink = ({ imageLink, title, shortCode }: UpdateImageLinkProps) => {
+const UpdateUniversalLink = ({ imageLink, title, shortCode }: UpdateUniversalLinkProps) => {
     const [isLoading, setIsLoading] = useState(false);
     const [showConfirmationDialog, setShowConfirmationDialog] = useState<boolean>(false);
     const [formData, setFormData] = useState({ title, imageLink });
@@ -43,6 +44,7 @@ const UpdateImageLink = ({ imageLink, title, shortCode }: UpdateImageLinkProps) 
         try {
             const { data } = await axios.post('/api/universalLink/update', { ...formData, universalLink: shortCode });
             if (!data.success) throw data.error;
+            refresh('/dashboard/details/[shortCode]')
             toast({
                 title: 'link updated successfully',
                 variant: 'success'
@@ -91,10 +93,9 @@ const UpdateImageLink = ({ imageLink, title, shortCode }: UpdateImageLinkProps) 
                 </form>
             </Form>
             <AlertDialog open={showConfirmationDialog}>
-                <AlertDialogContent>
+                <AlertDialogContent style={{ overflowWrap: 'anywhere' }}>
                     {
-
-                        <AlertDialogHeader>
+                        <AlertDialogHeader >
                             <AlertDialogTitle>Title changed from <span className="text-red-500">{title}</span> to <span className="text-green-500">{formData.title}</span>
                             </AlertDialogTitle>
                             <AlertDialogDescription>
@@ -112,4 +113,4 @@ const UpdateImageLink = ({ imageLink, title, shortCode }: UpdateImageLinkProps) 
         </div>)
 }
 
-export default UpdateImageLink
+export default UpdateUniversalLink

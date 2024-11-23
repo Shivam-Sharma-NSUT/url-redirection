@@ -1,11 +1,12 @@
 'use client';
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { Card, CardContent, CardHeader } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import axios from 'axios';
 import { useToast } from '@/hooks/use-toast';
 import Loader from './Loader';
+import refresh from '@/app/actions';
 
 const CreateLink = () => {
     const [title, setTitle] = useState<string>('');
@@ -13,10 +14,11 @@ const CreateLink = () => {
     const [isLoading, setIsLoading] = useState(false); 
 
 
-    const onSubmit = useCallback(async () => {
+    const onSubmit = async () => {
         try {
             setIsLoading(true);
             await axios.post('/api/links/create', { title });
+            refresh('/dashboard');
 
             toast({
                 title: 'New Link Created Successfully',
@@ -30,7 +32,7 @@ const CreateLink = () => {
             console.log(error);
         }
         setIsLoading(false);
-    }, [title, setIsLoading, toast]);
+    };
 
     return (
         <section>

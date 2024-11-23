@@ -3,8 +3,7 @@ import UniversalLinks from "@/components/UniversalLinks"
 
 const HomePage = () => {
   return (
-    <div className="flex-1">
-      <p className="text-2xl my-5">Home</p>
+    <div className="p-4">
       <main className="flex flex-col gap-2">
         <CreateLink />
         <UniversalLinks />

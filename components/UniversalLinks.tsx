@@ -7,11 +7,14 @@ import { HOST_URL } from '@/app/constants';
 import CopyButton from './CopyButton';
 import UniversalLinkActions from './UniversalLinkActions';
 import dbConnect from '@/lib/dbConnect';
+import { headers } from 'next/headers';
 
 const UniversalLinks = async () => {
   await dbConnect();
-  const userName = 'shivam Bhai';
-  const links: UniversalLink[] = await universalLink.find({ createdBy: userName });
+  const headersList = await headers();
+  const createdBy = headersList.get('email');
+  const links: UniversalLink[] = await universalLink.find({ createdBy });
+  links.reverse();
   if (isEmpty(links)) return (
     <section className="flex flex-row gap-3 flex-wrap content-stretch">
       No Links Present

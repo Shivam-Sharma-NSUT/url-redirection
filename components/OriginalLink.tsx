@@ -21,6 +21,7 @@ import { useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription } from "./ui/alert-dialog";
 import { Trash2 } from "lucide-react";
 import Loader from "./Loader";
+import refresh from "@/app/actions";
 
 
 const formSchema = z.object({
@@ -65,6 +66,7 @@ const OriginalLink = ({ link }: { link: { country: string, originalLink: string,
       try {
         const { data } = await axios.delete(`/api/links/${id}`);
         if (!data.success) throw data.error;
+        refresh('/dashboard/details/[shortCode]');
         toast({
           title: 'link deleted successfully',
           variant: 'success'
@@ -75,9 +77,6 @@ const OriginalLink = ({ link }: { link: { country: string, originalLink: string,
           title: 'failed to delete link',
           variant: 'destructive'
         })
-      } finally {
-        setShowConfirmationDialog(false);
-        setToBeDeleted(false);
       }
     } else {
       // update link flow
@@ -87,6 +86,7 @@ const OriginalLink = ({ link }: { link: { country: string, originalLink: string,
           id
         });
         if (!data.success) throw data.error;
+        refresh('/dashboard/details/[shortCode]');
         toast({
           title: 'link updated successfully',
           variant: 'success'
@@ -97,10 +97,10 @@ const OriginalLink = ({ link }: { link: { country: string, originalLink: string,
           title: 'failed to update link',
           variant: 'destructive'
         })
-      } finally {
-        setShowConfirmationDialog(false);
       }
     }
+    setToBeDeleted(false);
+    setShowConfirmationDialog(false);
     setIsLoading(false);
   }
 

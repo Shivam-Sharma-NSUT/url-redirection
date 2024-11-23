@@ -2,6 +2,7 @@ import { HOST_URL, SHORT_URL_CREATION_RETRY_COUNT, SHORT_URL_LENGTH } from "@/ap
 import universalLink, { UniversalLink } from "@/app/models/universalLink";
 import dbConnect from "@/lib/dbConnect";
 import { MongoError } from "mongodb";
+import { headers } from "next/headers";
 import { z } from 'zod';
 
 interface CreateRequest {
@@ -33,8 +34,8 @@ export async function POST(request: Request) {
     if (!validationResult.success) {
         return Response.json({ success: false, error: validationResult.error.issues });
     }
-
-    const createdBy = 'shivam Bhai';
+    const headersList = await headers();
+    const createdBy = headersList.get('email');
     const { title } = data;
 
     for(let i = 0; i < SHORT_URL_CREATION_RETRY_COUNT; i++) {

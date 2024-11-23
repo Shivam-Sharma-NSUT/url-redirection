@@ -19,6 +19,7 @@ import { map } from 'lodash';
 import axios from 'axios';
 import { useToast } from '@/hooks/use-toast';
 import Loader from './Loader';
+import refresh from '@/app/actions';
 
 const formSchema = z.object({
     country: z.string(), //.enum(LIST_OF_COUNTRIES.map(e => e.abbreviation)),
@@ -44,6 +45,7 @@ const AppendUrl = ({ shortCode }: { shortCode: string }) => {
                 universalLink: shortCode,
             });
             if (!data.success) throw data.error;
+            refresh('/dashboard/details/[shortCode]');
             toast({
                 title: 'link added successfully',
                 variant: 'success'
@@ -60,7 +62,7 @@ const AppendUrl = ({ shortCode }: { shortCode: string }) => {
     }
 
     return (
-        <Card className="border-2 shadow">
+        <Card className="border-2 shadow my-4">
             <CardContent>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-row gap-4 w-full mt-4 items-end">
