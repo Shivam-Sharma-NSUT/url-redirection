@@ -1,4 +1,3 @@
-// import { LIST_OF_COUNTRIES } from '@/app/constants';
 import originalLink from '@/app/models/originalLink';
 import dbConnect from '@/lib/dbConnect';
 import { z } from 'zod';
@@ -24,7 +23,6 @@ const updateRequestValidations = z.object({
         })
         .min(1, 'originalLink must not be empty'),
     country: z.string()
-        // .enum(LIST_OF_COUNTRIES.map(e => e.abbreviation), 'country must be one of the valid countries'),
 });
 
 export async function POST(request: Request) {

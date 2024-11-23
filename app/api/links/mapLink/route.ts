@@ -1,4 +1,3 @@
-// import { LIST_OF_COUNTRIES } from '@/app/constants';
 import originalLink from '@/app/models/originalLink';
 import universalLink from '@/app/models/universalLink';
 import dbConnect from '@/lib/dbConnect';
@@ -25,7 +24,6 @@ const appendRequestValidations = z.object({
         })
         .min(1, 'originalLink must not be empty'),
     country: z.string()
-        // .enum(LIST_OF_COUNTRIES.map(e => e.abbreviation) , 'country must be one of the valid countries'),
 });
 
 export async function POST(request: Request) {

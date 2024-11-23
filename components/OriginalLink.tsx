@@ -25,7 +25,7 @@ import refresh from "@/app/actions";
 
 
 const formSchema = z.object({
-  country: z.string(), //.enum(LIST_OF_COUNTRIES.map(e => e.abbreviation)),
+  country: z.string(),
   originalLink: z.string({ invalid_type_error: 'link must be a string' }).min(1, 'link must not be empty string')
 });
 
@@ -121,7 +121,7 @@ const OriginalLink = ({ link }: { link: { country: string, originalLink: string,
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {map(LIST_OF_COUNTRIES, country => (<SelectItem key={country.abbreviation} value={country.abbreviation}>{country.country}</SelectItem>))}
+                    {map(LIST_OF_COUNTRIES, country => (<SelectItem key={country.abbreviation} value={country.abbreviation}>{country.abbreviation}, {country.country}</SelectItem>))}
                   </SelectContent>
                 </Select>
                 <FormMessage />
